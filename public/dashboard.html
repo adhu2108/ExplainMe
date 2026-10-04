@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - ExplainMe Workspace</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Left Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <svg style="width:22px;height:22px" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+        </svg>
+        <span>ExplainMe</span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item active">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+          <span>Dashboard</span>
+        </a>
+        <a href="upload-contract.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+          <span>Upload Contract</span>
+        </a>
+        <a href="analysis-report.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 2v-6m-9 9h12a2 2 0 002-2V9a2 2 0 00-2-2H6a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+          <span>Analysis Reports</span>
+        </a>
+        <a href="account-security.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+          <span>Account Security</span>
+        </a>
+        <a href="settings.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+          <span>Settings</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-avatar" id="user-avatar-initials">--</div>
+        <div class="user-info">
+          <span class="name" id="user-display-name">Loading...</span>
+          <span class="email" id="user-display-email">...</span>
+        </div>
+        <button onclick="logout()" style="background:none; border:none; margin-left:auto; color:var(--text-secondary); cursor:pointer;" title="Sign Out">
+          <svg style="width:18px;height:18px" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+          </svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-layout">
+      <!-- Top Navbar -->
+      <header class="top-navbar">
+        <div class="navbar-left">
+          <button class="menu-toggle-btn" id="menu-toggle">
+            <svg style="width:24px;height:24px" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+          <span style="font-weight: 600; color: var(--text-secondary);">Enterprise Workspace</span>
+        </div>
+        <div class="navbar-right">
+          <!-- Notification Bell -->
+          <button class="nav-action-btn" title="Notifications">
+            <svg style="width:20px;height:20px" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+            </svg>
+            <span class="badge-dot"></span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <main class="content-area">
+        <div class="content-header">
+          <h1 id="welcome-title">Welcome back!</h1>
+          <p>Here is your contract risk assessment overview and recent document activity.</p>
+        </div>
+
+        <!-- System Welcome Notification banner -->
+        <div class="alert alert-success" id="welcome-banner" style="display: flex; align-items: center; justify-content: space-between;">
+          <span><strong>Notification:</strong> Multi-factor authentication is configured. Verify connected third-party integrations under Account Security settings.</span>
+          <button onclick="document.getElementById('welcome-banner').style.display='none'" style="background:none; border:none; color:inherit; font-weight:700; cursor:pointer;">Close</button>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-header">
+              <span>Contracts Analyzed</span>
+              <svg style="width:16px;height:16px" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+            </div>
+            <div class="stat-value">28</div>
+            <div class="stat-change up">
+              <span>↑ 12% from last month</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <span>Average Risk Score</span>
+              <svg style="width:16px;height:16px" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2z"></path></svg>
+            </div>
+            <div class="stat-value">12.4%</div>
+            <div class="stat-change down">
+              <span>↓ 3.2% optimization reduction</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <span>Pending Action Items</span>
+              <svg style="width:16px;height:16px" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            </div>
+            <div class="stat-value">4</div>
+            <div class="stat-change up" style="color: var(--warning)">
+              <span>Attention Required</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Contracts Table -->
+        <div class="card">
+          <div class="card-title">Recent Scans & Clause Verifications</div>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Document Name</th>
+                  <th>Upload Date</th>
+                  <th>Owner</th>
+                  <th>Compliance Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="font-weight:600;">Mutual Non-Disclosure Agreement.pdf</td>
+                  <td>Jun 08, 2026</td>
+                  <td>Sarah Jenkins</td>
+                  <td><span class="badge-status success">Compliant</span></td>
+                  <td><a href="analysis-report.html" style="font-weight:600; font-size:0.85rem;">View Report</a></td>
+                </tr>
+                <tr>
+                  <td style="font-weight:600;">SaaS Enterprise Agreement_v2.docx</td>
+                  <td>Jun 05, 2026</td>
+                  <td>Robert Chen</td>
+                  <td><span class="badge-status failed">2 High Risks</span></td>
+                  <td><a href="analysis-report.html" style="font-weight:600; font-size:0.85rem;">View Report</a></td>
+                </tr>
+                <tr>
+                  <td style="font-weight:600;">Vendor Service Level Agreement.pdf</td>
+                  <td>May 28, 2026</td>
+                  <td>Alex Sterling</td>
+                  <td><span class="badge-status success">Compliant</span></td>
+                  <td><a href="analysis-report.html" style="font-weight:600; font-size:0.85rem;">View Report</a></td>
+                </tr>
+                <tr>
+                  <td style="font-weight:600;">Office Lease Agreement Draft.docx</td>
+                  <td>May 14, 2026</td>
+                  <td>Sarah Jenkins</td>
+                  <td><span class="badge-status info">Under Review</span></td>
+                  <td><a href="analysis-report.html" style="font-weight:600; font-size:0.85rem;">View Report</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/auth.js"></script>
+  <script src="js/chatbot.js"></script>
+  <script>
+    // Enforce auth
+    checkAuth(true).then(profile => {
+      if (profile) {
+        document.getElementById('welcome-title').textContent = `Welcome back, ${profile.user.name}!`;
+        document.getElementById('welcome-banner').style.display = 'flex';
+        loadDashboardData(profile.user.name);
+      }
+    });
+
+    async function loadDashboardData(userName) {
+      try {
+        const response = await fetch('/api/contract/reports');
+        if (!response.ok) return;
+
+        const data = await response.json();
+        if (data.success && data.reports) {
+          if (data.reports.length > 0) {
+            renderDashboardStatsAndTable(data.reports, userName);
+          } else {
+            renderEmptyDashboard();
+          }
+        }
+      } catch (err) {
+        console.error('Error loading dashboard reports:', err);
+      }
+    }
+
+    function renderEmptyDashboard() {
+      // Set stats to 0
+      const statValues = document.querySelectorAll('.stat-value');
+      if (statValues.length >= 3) {
+        statValues[0].textContent = '0';
+        statValues[0].nextElementSibling.querySelector('span').textContent = 'No documents uploaded';
+
+        statValues[1].textContent = '0.0%';
+        statValues[1].nextElementSibling.querySelector('span').textContent = 'No active pipeline';
+
+        statValues[2].textContent = '0';
+        statValues[2].nextElementSibling.querySelector('span').textContent = 'No actions required';
+      }
+
+      // Render empty state in table
+      const tbody = document.querySelector('.table tbody');
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="5" style="text-align: center; padding: 3rem; color: var(--text-secondary);">
+            <div style="font-size: 1.1rem; margin-bottom: 0.5rem; font-weight: 500;">No contracts audited yet</div>
+            <div style="font-size: 0.85rem; margin-bottom: 1rem;">Upload a PDF or TXT contract to view its risk profile and compliance report.</div>
+            <a href="upload-contract.html" class="btn btn-primary" style="width: auto; display: inline-flex; padding: 0.5rem 1rem; text-decoration: none; justify-content: center; align-items: center; border-radius: var(--radius-sm);">
+              Upload Contract
+            </a>
+          </td>
+        </tr>
+      `;
+    }
+
+    function renderDashboardStatsAndTable(reports, userName) {
+      // 1. Calculate Stats
+      const totalContracts = reports.length;
+      let totalCritical = 0;
+      let totalWarning = 0;
+      let totalCompliant = 0;
+
+      reports.forEach(r => {
+        totalCritical += r.critical_count || 0;
+        totalWarning += r.warning_count || 0;
+        totalCompliant += r.compliant_count || 0;
+      });
+
+      // Update stats cards
+      const statValues = document.querySelectorAll('.stat-value');
+      if (statValues.length >= 3) {
+        // Total Analyzed
+        statValues[0].textContent = totalContracts;
+        statValues[0].nextElementSibling.querySelector('span').textContent = `↑ ${totalContracts} total documents`;
+
+        // Average Risk Score (Ratio of critical/warning to total clauses)
+        const totalClauses = totalCritical + totalWarning + totalCompliant;
+        const avgRisk = totalClauses > 0 ? ((totalCritical + totalWarning) / totalClauses * 100).toFixed(1) : '0.0';
+        statValues[1].textContent = `${avgRisk}%`;
+        statValues[1].nextElementSibling.querySelector('span').textContent = `From current active pipeline`;
+
+        // Pending Actions
+        statValues[2].textContent = totalCritical;
+        statValues[2].nextElementSibling.querySelector('span').textContent = totalCritical > 0 ? 'Critical Issues Found' : 'Clean Scan Results';
+      }
+
+      // 2. Render Table Rows
+      const tbody = document.querySelector('.table tbody');
+      tbody.innerHTML = ''; // Clear hardcoded rows
+
+      reports.forEach(report => {
+        const row = document.createElement('tr');
+        
+        const dateStr = new Date(report.analyzed_at).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'short',
+          day: '2-digit'
+        });
+
+        let statusBadge = '<span class="badge-status success">Compliant</span>';
+        if (report.critical_count > 0) {
+          statusBadge = `<span class="badge-status failed">${report.critical_count} High Risk${report.critical_count > 1 ? 's' : ''}</span>`;
+        } else if (report.warning_count > 0) {
+          statusBadge = `<span class="badge-status warning">${report.warning_count} Warning${report.warning_count > 1 ? 's' : ''}</span>`;
+        }
+
+        row.innerHTML = `
+          <td style="font-weight:600;">${report.filename}</td>
+          <td>${dateStr}</td>
+          <td>${userName}</td>
+          <td>${statusBadge}</td>
+          <td><a href="analysis-report.html?id=${report.id}" style="font-weight:600; font-size:0.85rem;">View Report</a></td>
+        `;
+        
+        tbody.appendChild(row);
+      });
+    }
+  </script>
+</body>
+</html>

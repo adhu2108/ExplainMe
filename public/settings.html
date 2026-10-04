@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings - ExplainMe Workspace</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .settings-grid {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 2.5rem;
+    }
+    @media (max-width: 768px) {
+      .settings-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+    }
+    .settings-tabs {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    .settings-tab-btn {
+      text-align: left;
+      padding: 0.6rem 0.85rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      background: none;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .settings-tab-btn:hover, .settings-tab-btn.active {
+      color: var(--text-primary);
+      background-color: #F1F5F9;
+    }
+    .settings-tab-btn.active {
+      font-weight: 600;
+    }
+    .settings-content-section {
+      display: none;
+    }
+    .settings-content-section.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Left Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <svg style="width:22px;height:22px" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+        </svg>
+        <span>ExplainMe</span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+          <span>Dashboard</span>
+        </a>
+        <a href="upload-contract.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+          <span>Upload Contract</span>
+        </a>
+        <a href="analysis-report.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 2v-6m-9 9h12a2 2 0 002-2V9a2 2 0 00-2-2H6a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+          <span>Analysis Reports</span>
+        </a>
+        <a href="account-security.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+          <span>Account Security</span>
+        </a>
+        <a href="settings.html" class="nav-item active">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+          <span>Settings</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-avatar" id="user-avatar-initials">--</div>
+        <div class="user-info">
+          <span class="name" id="user-display-name">Loading...</span>
+          <span class="email" id="user-display-email">...</span>
+        </div>
+        <button onclick="logout()" style="background:none; border:none; margin-left:auto; color:var(--text-secondary); cursor:pointer;" title="Sign Out">
+          <svg style="width:18px;height:18px" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+          </svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Workspace Content -->
+    <div class="main-layout">
+      <!-- Top Navbar -->
+      <header class="top-navbar">
+        <div class="navbar-left">
+          <button class="menu-toggle-btn" id="menu-toggle">
+            <svg style="width:24px;height:24px" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+          <span style="font-weight: 600; color: var(--text-secondary);">Workspace Settings</span>
+        </div>
+      </header>
+
+      <main class="content-area">
+        <div class="content-header">
+          <h1>Workspace Configuration</h1>
+          <p>Update profile fields, customize notification preferences, and invite collaborators to your workspace.</p>
+        </div>
+
+        <div class="settings-grid">
+          <!-- Left side tab buttons -->
+          <div class="settings-tabs">
+            <button class="settings-tab-btn active" onclick="switchTab('profile')">Profile details</button>
+            <button class="settings-tab-btn" onclick="switchTab('notifications')">Notifications</button>
+            <button class="settings-tab-btn" onclick="switchTab('team')">Team Members</button>
+          </div>
+
+          <!-- Right side content tabs -->
+          <div class="settings-content">
+            <!-- PROFILE DETAILS -->
+            <div class="settings-content-section active" id="sec-profile">
+              <div class="card">
+                <div class="card-title">Corporate Profile</div>
+                <form onsubmit="event.preventDefault(); alert('Profile parameters updated.');">
+                  <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="profile-name" value="Sarah Jenkins">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Registered Country</label>
+                    <input type="text" class="form-control" id="profile-country" value="United States" readonly style="background:#F1F5F9; cursor:not-allowed;">
+                  </div>
+                  <button type="submit" class="btn btn-primary" style="width:auto; padding:0.6rem 1.5rem;">Save Changes</button>
+                </form>
+              </div>
+            </div>
+
+            <!-- NOTIFICATIONS -->
+            <div class="settings-content-section" id="sec-notifications">
+              <div class="card">
+                <div class="card-title">Notification Channels</div>
+                <div style="display:flex; flex-direction:column; gap:1.25rem;">
+                  <label class="checkbox-label">
+                    <input type="checkbox" checked>
+                    <div>
+                      <div style="font-weight:600; color:var(--text-primary);">Email Weekly Digests</div>
+                      <div style="font-size:0.8rem; color:var(--text-secondary);">Receive summary reports of scanned contracts directly to your mailbox.</div>
+                    </div>
+                  </label>
+                  
+                  <label class="checkbox-label" style="border-top:1px solid var(--border); padding-top:1.25rem;">
+                    <input type="checkbox" checked>
+                    <div>
+                      <div style="font-weight:600; color:var(--text-primary);">Critical Risk SMS Alerting</div>
+                      <div style="font-size:0.8rem; color:var(--text-secondary);">Send security SMS notifications if high-severity risk items are identified in uploaded contracts.</div>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- TEAM MEMBERS -->
+            <div class="settings-content-section" id="sec-team">
+              <div class="card">
+                <div class="card-title">Workspace Members</div>
+                <div class="table-responsive">
+                  <table class="table" style="margin-bottom: 1.5rem;">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Sarah Jenkins</td>
+                        <td>Workspace Administrator</td>
+                        <td><span class="badge-status success">Owner</span></td>
+                      </tr>
+                      <tr>
+                        <td>Robert Chen</td>
+                        <td>Legal Analyst</td>
+                        <td><span class="badge-status info">Member</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div style="border-top: 1px solid var(--border); padding-top: 1.5rem;">
+                  <div class="card-title" style="font-size:1rem;">Invite Collaborator</div>
+                  <form style="display:flex; gap:0.75rem;" onsubmit="event.preventDefault(); alert('Invitation email sent to recipient.');">
+                    <input type="email" class="form-control" placeholder="colleague@company.com" required style="flex:1;">
+                    <button type="submit" class="btn btn-primary" style="width:auto; padding:0.6rem 1.5rem;">Send Invite</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/auth.js"></script>
+  <script src="js/chatbot.js"></script>
+  <script>
+    checkAuth(true).then(profile => {
+      if (profile && profile.user) {
+        document.getElementById('profile-name').value = profile.user.name;
+        document.getElementById('profile-country').value = profile.user.country || 'United States';
+      }
+    });
+
+    function switchTab(tabId) {
+      // Deactivate all buttons
+      const buttons = document.querySelectorAll('.settings-tab-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+
+      // Activate clicked button
+      event.target.classList.add('active');
+
+      // Hide all sections
+      const sections = document.querySelectorAll('.settings-content-section');
+      sections.forEach(sec => sec.classList.remove('active'));
+
+      // Show targeted section
+      document.getElementById(`sec-${tabId}`).classList.add('active');
+    }
+  </script>
+</body>
+</html>

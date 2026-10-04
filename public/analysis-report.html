@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analysis Report - ExplainMe Workspace</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .report-summary-box {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .summary-metric {
+      flex: 1;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    .metric-number {
+      font-size: 2.25rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .metric-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    .dot-danger { background-color: var(--error); }
+    .dot-warning { background-color: var(--warning); }
+    .dot-success { background-color: var(--success); }
+    
+    /* Accordion transitions */
+    .clause-card-body {
+      max-height: 0;
+      padding: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease-out, padding 0.2s ease-out;
+    }
+    .clause-card.open .clause-card-body {
+      max-height: 500px;
+      padding: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .clause-card-header svg {
+      transition: transform 0.2s ease;
+    }
+    .clause-card.open .clause-card-header svg {
+      transform: rotate(180deg);
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Left Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <svg style="width:22px;height:22px" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+        </svg>
+        <span>ExplainMe</span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+          <span>Dashboard</span>
+        </a>
+        <a href="upload-contract.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+          <span>Upload Contract</span>
+        </a>
+        <a href="analysis-report.html" class="nav-item active">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 2v-6m-9 9h12a2 2 0 002-2V9a2 2 0 00-2-2H6a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+          <span>Analysis Reports</span>
+        </a>
+        <a href="account-security.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+          <span>Account Security</span>
+        </a>
+        <a href="settings.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+          <span>Settings</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-avatar" id="user-avatar-initials">--</div>
+        <div class="user-info">
+          <span class="name" id="user-display-name">Loading...</span>
+          <span class="email" id="user-display-email">...</span>
+        </div>
+        <button onclick="logout()" style="background:none; border:none; margin-left:auto; color:var(--text-secondary); cursor:pointer;" title="Sign Out">
+          <svg style="width:18px;height:18px" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+          </svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Workspace Content -->
+    <div class="main-layout">
+      <!-- Top Navbar -->
+      <header class="top-navbar">
+        <div class="navbar-left">
+          <button class="menu-toggle-btn" id="menu-toggle">
+            <svg style="width:24px;height:24px" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+          <span style="font-weight: 600; color: var(--text-secondary);">Compliance Report</span>
+        </div>
+      </header>
+
+      <main class="content-area">
+        <div class="content-header" style="display:flex; justify-content:space-between; align-items:flex-end;">
+          <div>
+            <h1>Mutual NDA Audit Report</h1>
+            <p>Risk analysis details for document package: <strong>Mutual Non-Disclosure Agreement.pdf</strong></p>
+          </div>
+          <span style="font-size:0.875rem; color:var(--text-secondary)">Analyzed on: Jun 09, 2026</span>
+        </div>
+
+        <!-- Metric summaries -->
+        <div class="report-summary-box">
+          <div class="summary-metric">
+            <div class="metric-dot dot-danger"></div>
+            <div>
+              <div class="metric-number" style="color:var(--error)">1</div>
+              <div style="font-size:0.85rem; color:var(--text-secondary)">Critical Risk</div>
+            </div>
+          </div>
+          <div class="summary-metric">
+            <div class="metric-dot dot-warning"></div>
+            <div>
+              <div class="metric-number" style="color:var(--warning)">1</div>
+              <div style="font-size:0.85rem; color:var(--text-secondary)">Warning Risk</div>
+            </div>
+          </div>
+          <div class="summary-metric">
+            <div class="metric-dot dot-success"></div>
+            <div>
+              <div class="metric-number" style="color:var(--success)">2</div>
+              <div style="font-size:0.85rem; color:var(--text-secondary)">Compliant</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Accordion list of clauses -->
+        <div class="clause-card open" id="c1">
+          <div class="clause-card-header" onclick="toggleClause('c1')">
+            <div class="clause-card-title">
+              <svg style="width:16px;height:16px" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+              <span>Clause 8.2: Limitation of Liability Cap</span>
+            </div>
+            <span class="clause-risk-badge critical">Critical Risk</span>
+          </div>
+          <div class="clause-card-body">
+            <div class="clause-text">
+              "Nothing in this Agreement shall limit or exclude either party's liability for breaches of confidentiality or indemnification obligations under Clause 9, which shall remain entirely uncapped."
+            </div>
+            <div class="clause-analysis-title">AI Compliance Analysis</div>
+            <p style="font-size:0.9rem; color:var(--text-primary); margin-bottom:1rem;">
+              The clause establishes uncapped liability for general breaches of confidentiality and indemnity, which exposes your business to unbounded financial exposure in the event of accidental leaks.
+            </p>
+            <div class="clause-recommendation">
+              <strong>Recommendation:</strong> Propose a reciprocal liability cap (e.g. limiting liability to $250,000 or 2x fees paid) to isolate operational risk.
+            </div>
+          </div>
+        </div>
+
+        <div class="clause-card" id="c2">
+          <div class="clause-card-header" onclick="toggleClause('c2')">
+            <div class="clause-card-title">
+              <svg style="width:16px;height:16px" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+              <span>Clause 11.4: Exclusivity Obligations</span>
+            </div>
+            <span class="clause-risk-badge warning">Warning Risk</span>
+          </div>
+          <div class="clause-card-body">
+            <div class="clause-text">
+              "For a period of twelve (12) months following the termination of this Agreement, the receiving party agrees not to engage, solicit, or enter into similar evaluations with competitors listed in Exhibit B."
+            </div>
+            <div class="clause-analysis-title">AI Compliance Analysis</div>
+            <p style="font-size:0.9rem; color:var(--text-primary); margin-bottom:1rem;">
+              The 12-month post-termination non-solicit and exclusivity period is overly restrictive and may inhibit your engineering team from working with other market players.
+            </p>
+            <div class="clause-recommendation">
+              <strong>Recommendation:</strong> Reduce non-solicit term to 6 months and limit non-solicit exclusively to executive-level hires.
+            </div>
+          </div>
+        </div>
+
+        <div class="clause-card" id="c3">
+          <div class="clause-card-header" onclick="toggleClause('c3')">
+            <div class="clause-card-title">
+              <svg style="width:16px;height:16px" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+              <span>Clause 4.1: Return of Materials</span>
+            </div>
+            <span class="clause-risk-badge low">Compliant</span>
+          </div>
+          <div class="clause-card-body">
+            <div class="clause-text">
+              "Within ten (10) business days of receiving a written request, the receiving party shall return or destroy all written confidential material and certify such destruction in writing."
+            </div>
+            <div class="clause-analysis-title">AI Compliance Analysis</div>
+            <p style="font-size:0.9rem; color:var(--text-primary); margin-bottom:1rem;">
+              Standard legal timelines allow 10 business days for certifying document destruction. This is compliant with market standards.
+            </p>
+            <div class="clause-recommendation" style="background-color:#EBF5FF; border-left-color:#10B981;">
+              <strong>Note:</strong> No revisions needed. This clause meets safety baselines.
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/auth.js"></script>
+  <script src="js/chatbot.js"></script>
+  <script>
+    checkAuth(true);
+
+    function toggleClause(id) {
+      const card = document.getElementById(id);
+      card.classList.toggle('open');
+    }
+
+    // Load dynamic report
+    document.addEventListener('DOMContentLoaded', async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      let reportId = urlParams.get('id');
+      const isAdminView = urlParams.get('admin') === 'true';
+
+      if (!reportId && !isAdminView) {
+        // Fetch user's reports to load the latest one automatically
+        try {
+          const res = await fetch('/api/contract/reports');
+          if (res.ok) {
+            const data = await res.json();
+            if (data.success && data.reports && data.reports.length > 0) {
+              reportId = data.reports[0].id;
+            }
+          }
+        } catch (e) {
+          console.error('Failed to query user reports:', e);
+        }
+      }
+
+      if (reportId) {
+        try {
+          const endpoint = isAdminView ? `/api/admin/report/${reportId}` : `/api/contract/report/${reportId}`;
+          const response = await fetch(endpoint);
+          if (!response.ok) {
+            throw new Error('Failed to load report.');
+          }
+
+          const data = await response.json();
+          if (!data.success) {
+            throw new Error(data.error || 'Failed to parse report.');
+          }
+
+          renderReport(data.contract, data.clauses);
+        } catch (err) {
+          console.error('Error fetching report details:', err);
+          renderEmptyState('Failed to load compliance report.');
+        }
+      } else {
+        renderEmptyState('No compliance audit reports found.');
+      }
+    });
+
+    function renderEmptyState(message) {
+      const reportTitle = document.querySelector('.content-header h1');
+      const reportSubtitle = document.querySelector('.content-header p');
+      const reportDate = document.querySelector('.content-header span');
+
+      reportTitle.textContent = 'No Audit Reports Generated';
+      reportSubtitle.innerHTML = 'You have not uploaded any contracts for auditing yet.';
+      if (reportDate) reportDate.textContent = '';
+
+      const summaryMetrics = document.querySelectorAll('.summary-metric');
+      if (summaryMetrics.length >= 3) {
+        summaryMetrics[0].querySelector('.metric-number').textContent = '0';
+        summaryMetrics[1].querySelector('.metric-number').textContent = '0';
+        summaryMetrics[2].querySelector('.metric-number').textContent = '0';
+      }
+
+      const contentArea = document.querySelector('.content-area');
+      const existingCards = contentArea.querySelectorAll('.clause-card');
+      existingCards.forEach(card => card.remove());
+
+      const emptyCard = document.createElement('div');
+      emptyCard.className = 'card';
+      emptyCard.style.textAlign = 'center';
+      emptyCard.style.padding = '4rem 2rem';
+      emptyCard.innerHTML = `
+        <div style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-primary);">
+          No legal clause assessments available
+        </div>
+        <p style="color: var(--text-secondary); max-width: 450px; margin: 0 auto 1.5rem; font-size: 0.9rem;">
+          To audit your legal agreement and check for liability, non-disclosure compliance, exclusivity risk, or indemnification issues, please upload a contract file first.
+        </p>
+        <a href="upload-contract.html" class="btn btn-primary" style="width: auto; display: inline-flex; padding: 0.6rem 1.5rem; text-decoration: none; justify-content: center; align-items: center; border-radius: var(--radius-sm);">
+          Go to Upload Page
+        </a>
+      `;
+      contentArea.appendChild(emptyCard);
+    }
+
+    function renderReport(contract, clauses) {
+      // 1. Update Title and Headers
+      const reportTitle = document.querySelector('.content-header h1');
+      const reportSubtitle = document.querySelector('.content-header p');
+      const reportDate = document.querySelector('.content-header span');
+
+      const dateStr = new Date(contract.analyzed_at).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: '2-digit'
+      });
+
+      reportTitle.textContent = `${contract.filename.replace(/\.[^/.]+$/, "")} Audit Report`;
+      reportSubtitle.innerHTML = `Risk analysis details for document package: <strong>${contract.filename}</strong>`;
+      reportDate.textContent = `Analyzed on: ${dateStr}`;
+
+      // 2. Update Risk Counters
+      const summaryMetrics = document.querySelectorAll('.summary-metric');
+      if (summaryMetrics.length >= 3) {
+        // Critical
+        summaryMetrics[0].querySelector('.metric-number').textContent = contract.critical_count;
+        // Warning
+        summaryMetrics[1].querySelector('.metric-number').textContent = contract.warning_count;
+        // Compliant
+        summaryMetrics[2].querySelector('.metric-number').textContent = contract.compliant_count;
+      }
+
+      // 3. Clear existing clause cards and render dynamically
+      const contentArea = document.querySelector('.content-area');
+      const existingCards = contentArea.querySelectorAll('.clause-card');
+      existingCards.forEach(card => card.remove());
+
+      // Render clauses
+      clauses.forEach((clause, index) => {
+        const cardId = `c_dyn_${clause.id || index}`;
+        const card = document.createElement('div');
+        card.className = `clause-card ${index === 0 ? 'open' : ''}`;
+        card.id = cardId;
+
+        let riskClass = 'low';
+        let riskLabel = 'Compliant';
+        let noteStyle = 'background-color:#EBF5FF; border-left-color:#10B981;';
+        let noteHeader = 'Note:';
+
+        if (clause.risk_level === 'critical') {
+          riskClass = 'critical';
+          riskLabel = 'Critical Risk';
+          noteStyle = '';
+          noteHeader = 'Recommendation:';
+        } else if (clause.risk_level === 'warning') {
+          riskClass = 'warning';
+          riskLabel = 'Warning Risk';
+          noteStyle = '';
+          noteHeader = 'Recommendation:';
+        }
+
+        card.innerHTML = `
+          <div class="clause-card-header" onclick="toggleClause('${cardId}')">
+            <div class="clause-card-title">
+              <svg style="width:16px;height:16px" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+              <span>${clause.clause_title}</span>
+            </div>
+            <span class="clause-risk-badge ${riskClass}">${riskLabel}</span>
+          </div>
+          <div class="clause-card-body">
+            <div class="clause-text">
+              "${clause.clause_text}"
+            </div>
+            <div class="clause-analysis-title">AI Compliance Analysis</div>
+            <p style="font-size:0.9rem; color:var(--text-primary); margin-bottom:1rem;">
+              ${clause.analysis}
+            </p>
+            <div class="clause-recommendation" style="${noteStyle}">
+              <strong>${noteHeader}</strong> ${clause.recommendation}
+            </div>
+          </div>
+        `;
+
+        contentArea.appendChild(card);
+      });
+    }
+  </script>
+</body>
+</html>

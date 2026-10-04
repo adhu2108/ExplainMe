@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ExplainMe - Enterprise-grade AI contract analysis and risk identification platform.">
+  <title>ExplainMe - Enterprise AI Contract Analysis</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Unique homepage custom styling */
+    .landing-nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+    }
+    .landing-logo {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+    .nav-links a {
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+    .hero-section {
+      max-width: 1200px;
+      margin: 4rem auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      gap: 4rem;
+    }
+    @media (max-width: 768px) {
+      .hero-section {
+        flex-direction: column;
+        text-align: center;
+        margin: 2rem auto;
+      }
+    }
+    .hero-content {
+      flex: 1.2;
+    }
+    .hero-content h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: var(--text-primary);
+    }
+    .hero-content p {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      margin: 1.5rem 0 2.5rem;
+      line-height: 1.6;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+    }
+    @media (max-width: 768px) {
+      .hero-actions {
+        justify-content: center;
+      }
+    }
+    .hero-graphic {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+    .features-section {
+      max-width: 1200px;
+      margin: 6rem auto;
+      padding: 0 2rem;
+      text-align: center;
+    }
+    .features-title {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      margin-bottom: 3rem;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    .feature-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      text-align: left;
+    }
+    .feature-icon {
+      width: 40px;
+      height: 40px;
+      background-color: var(--primary);
+      color: #FFFFFF;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+    .feature-card h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+    .feature-card p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <nav class="landing-nav" id="main-nav">
+    <div class="landing-logo">
+      <svg style="width:24px;height:24px" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+      </svg>
+      <span>ExplainMe</span>
+    </div>
+    <div class="nav-links">
+      <a href="login.html">Sign In</a>
+      <a href="register.html" class="btn btn-primary" style="padding: 0.5rem 1.2rem; width: auto;">Get Started</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero-section">
+    <div class="hero-content">
+      <h1>AI Contract Intelligence for Enterprises</h1>
+      <p>Analyze legal contracts, highlight liability exposure, and summarize complex clauses instantly with Lexi AI.</p>
+      <div class="hero-actions">
+        <a href="register.html" class="btn btn-primary" style="width: auto; padding: 0.85rem 1.75rem;">Create Free Account</a>
+        <a href="login.html" class="btn btn-outline" style="width: auto; padding: 0.85rem 1.75rem;">Workspace Sign In</a>
+      </div>
+    </div>
+    <div class="hero-graphic">
+      <!-- Premium CSS Legal Tech Mockup -->
+      <div class="legal-tech-graphic" style="color: var(--text-primary); background: var(--card-bg); border-color: var(--border);">
+        <div class="mock-doc-row">
+          <div class="doc-tag" style="color: var(--text-primary)">
+            <svg style="width:18px;height:18px" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            <span>Mutual NDA Agreement.docx</span>
+          </div>
+          <span class="doc-badge danger">CRITICAL RISK</span>
+        </div>
+        <div class="mock-doc-row">
+          <div class="doc-tag" style="color: var(--text-primary)">
+            <svg style="width:18px;height:18px" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <span>Intellectual Property Ownership</span>
+          </div>
+          <span class="doc-badge success">COMPLIANT</span>
+        </div>
+        <div class="mock-doc-row">
+          <div class="doc-tag" style="color: var(--text-primary)">
+            <svg style="width:18px;height:18px" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            <span>Indemnity Cap Exposure</span>
+          </div>
+          <span class="doc-badge warning">MEDIUM RISK</span>
+        </div>
+        <div class="mock-doc-row" style="border-bottom: none;">
+          <div class="doc-tag" style="color: var(--text-primary)">
+            <svg style="width:18px;height:18px" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+            <span>Contract Duration & Survival</span>
+          </div>
+          <span class="doc-badge success">OK</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Features Section -->
+  <section class="features-section">
+    <h2 class="features-title">Enterprise Security & Audit Compliance</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg style="width:20px;height:20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+        </div>
+        <h3>Multi-Factor Auth (2FA)</h3>
+        <p>Protect account credentials with standard SMS or Email backup OTP verification options.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg style="width:20px;height:20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+        </div>
+        <h3>Session Auditing</h3>
+        <p>Monitor connected sessions, active locations, login timestamps, and revoke unrecognized devices dynamically.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg style="width:20px;height:20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+        </div>
+        <h3>OAuth Linking</h3>
+        <p>Link and unlink Google, Facebook, and X (Twitter) credentials seamlessly within your security panel.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- JS Scripts -->
+  <script src="js/auth.js"></script>
+  <script src="js/chatbot.js"></script>
+  <script>
+    // Auto redirect if already logged in
+    checkAuth(false);
+  </script>
+</body>
+</html>

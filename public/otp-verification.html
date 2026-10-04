@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Security Verification - ExplainMe</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      background-color: #F8FAFC;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 1rem;
+    }
+    .otp-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+    }
+    .sandbox-badge {
+      display: inline-block;
+      background-color: #EFF6FF;
+      border: 1px solid #BFDBFE;
+      color: #1E40AF;
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="otp-card">
+    <div class="logo-container" style="justify-content: center; margin-bottom: 1.5rem;">
+      <svg style="width:24px;height:24px" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+      </svg>
+      <span>ExplainMe</span>
+    </div>
+
+    <div class="auth-header">
+      <h2>Security Verification</h2>
+      <p id="target-description" style="margin-top: 0.5rem;">We've sent a 6-digit security code to your mobile device.</p>
+    </div>
+
+    <!-- Sandbox Testing Helper -->
+    <div class="sandbox-badge" id="sandbox-helper">
+      [Sandbox Mode] Security Code: <span id="sandbox-code-placeholder" style="font-weight:700;">######</span>
+    </div>
+
+    <div class="alert alert-error" id="error-alert"></div>
+    <div class="alert alert-success" id="success-alert"></div>
+
+    <form id="otp-form">
+      <div class="otp-inputs">
+        <input type="text" class="otp-box" maxlength="1" pattern="[0-9]" required autocomplete="off">
+        <input type="text" class="otp-box" maxlength="1" pattern="[0-9]" required autocomplete="off">
+        <input type="text" class="otp-box" maxlength="1" pattern="[0-9]" required autocomplete="off">
+        <input type="text" class="otp-box" maxlength="1" pattern="[0-9]" required autocomplete="off">
+        <input type="text" class="otp-box" maxlength="1" pattern="[0-9]" required autocomplete="off">
+        <input type="text" class="otp-box" maxlength="1" pattern="[0-9]" required autocomplete="off">
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="width:100%; margin-top: 1rem;">
+        Verify Identity
+      </button>
+    </form>
+
+    <div style="margin-top: 1.5rem; font-size: 0.875rem; color: var(--text-secondary);">
+      Didn't receive the code? 
+      <span id="countdown-wrapper">Resend available in <strong id="timer">59s</strong></span>
+      <button id="resend-btn" class="btn btn-outline" style="width:auto; padding:0.25rem 0.75rem; font-size:0.8rem; display:none; margin: 0.5rem auto 0;">
+        Resend OTP Code
+      </button>
+    </div>
+
+    <!-- Backup methods -->
+    <div style="border-top: 1px solid var(--border); margin-top: 2rem; padding-top: 1.5rem;">
+      <a href="#" id="toggle-backup-method" style="font-size:0.85rem; font-weight:500; color:var(--text-secondary);">
+        Try Email Backup OTP
+      </a>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/auth.js"></script>
+  <script>
+    // URL Params
+    const urlParams = new URLSearchParams(window.location.search);
+    let phone = urlParams.get('phone') || '';
+    let email = urlParams.get('email') || '';
+    const type = urlParams.get('type') || 'login';
+    const sandboxCode = urlParams.get('sandboxCode') || '';
+
+    // Elements
+    const targetDesc = document.getElementById('target-description');
+    const sandboxHelper = document.getElementById('sandbox-helper');
+    const placeholder = document.getElementById('sandbox-code-placeholder');
+    const toggleBackup = document.getElementById('toggle-backup-method');
+    const errorAlert = document.getElementById('error-alert');
+    const successAlert = document.getElementById('success-alert');
+
+    // UI Updates based on target method
+    function updateTargetUI() {
+      if (phone) {
+        targetDesc.textContent = `We've sent a 6-digit security code to ${phone}.`;
+        toggleBackup.textContent = "Send verification to email instead";
+      } else if (email) {
+        targetDesc.textContent = `We've sent a 6-digit security code to ${email}.`;
+        toggleBackup.textContent = "Send verification to phone number instead";
+      }
+      
+      if (sandboxCode) {
+        sandboxHelper.style.display = 'inline-block';
+        placeholder.textContent = sandboxCode;
+      } else {
+        sandboxHelper.style.display = 'none';
+      }
+    }
+    updateTargetUI();
+
+    // OTP Input Navigation Logic
+    const boxes = document.querySelectorAll('.otp-box');
+    boxes.forEach((box, index) => {
+      // Auto-focus first box
+      if (index === 0) box.focus();
+
+      // KeyUp moves cursor forward
+      box.addEventListener('keyup', (e) => {
+        if (box.value.length === 1 && index < boxes.length - 1) {
+          boxes[index + 1].focus();
+        }
+      });
+
+      // KeyDown manages backspaces
+      box.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace' && box.value.length === 0 && index > 0) {
+          boxes[index - 1].focus();
+        }
+      });
+    });
+
+    // Countdown Timer Logic
+    const timerText = document.getElementById('timer');
+    const countdownWrapper = document.getElementById('countdown-wrapper');
+    const resendBtn = document.getElementById('resend-btn');
+    let duration = 59;
+    let timerInterval;
+
+    function startTimer() {
+      resendBtn.style.display = 'none';
+      countdownWrapper.style.display = 'inline';
+      duration = 59;
+      timerText.textContent = `59s`;
+
+      clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        duration--;
+        timerText.textContent = `${duration}s`;
+        if (duration <= 0) {
+          clearInterval(timerInterval);
+          countdownWrapper.style.display = 'none';
+          resendBtn.style.display = 'block';
+        }
+      }, 1000);
+    }
+    startTimer();
+
+    // Verify OTP Submission
+    document.getElementById('otp-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorAlert.style.display = 'none';
+      successAlert.style.display = 'none';
+
+      // Combine digit inputs
+      let otpCode = '';
+      boxes.forEach(box => otpCode += box.value);
+
+      try {
+        const response = await fetch('/api/auth/otp/verify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            phone: phone || undefined,
+            email: email || undefined,
+            code: otpCode,
+            type
+          })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          successAlert.textContent = 'MFA verified successfully. Initializing dashboard...';
+          successAlert.style.display = 'block';
+          setTimeout(() => {
+            window.location.href = '/dashboard.html';
+          }, 1000);
+        } else {
+          errorAlert.textContent = data.error || 'Invalid code. Verification attempts rate limited.';
+          errorAlert.style.display = 'block';
+        }
+      } catch (err) {
+        errorAlert.textContent = 'Connection error. Check backend logs.';
+        errorAlert.style.display = 'block';
+      }
+    });
+
+    // Handle Resend OTP Request
+    resendBtn.addEventListener('click', async () => {
+      errorAlert.style.display = 'none';
+      successAlert.style.display = 'none';
+
+      try {
+        const response = await fetch('/api/auth/phone', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            phone: phone || undefined,
+            email: email || undefined,
+            type
+          })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          successAlert.textContent = 'New verification code dispatched.';
+          successAlert.style.display = 'block';
+          if (data.sandboxCode) {
+            sandboxHelper.style.display = 'inline-block';
+            placeholder.textContent = data.sandboxCode;
+          }
+          startTimer();
+        } else {
+          errorAlert.textContent = data.error || 'Failed to dispatch new OTP.';
+          errorAlert.style.display = 'block';
+        }
+      } catch (err) {
+        errorAlert.textContent = 'Error contacting SMS gateway.';
+        errorAlert.style.display = 'block';
+      }
+    });
+
+    // Toggle back and forth between backup channels (SMS & Email)
+    toggleBackup.addEventListener('click', (e) => {
+      e.preventDefault();
+      errorAlert.style.display = 'none';
+      successAlert.style.display = 'none';
+
+      if (phone) {
+        // Swap to email backup
+        email = prompt('Enter backup email address for verification:');
+        if (!email) return;
+        phone = '';
+      } else {
+        // Swap to phone SMS
+        phone = prompt('Enter backup phone number (e.g. +1...):');
+        if (!phone) return;
+        email = '';
+      }
+      
+      updateTargetUI();
+      resendBtn.click(); // Trigger code generation for the new channel
+    });
+  </script>
+</body>
+</html>

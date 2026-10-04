@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In - ExplainMe</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="auth-container">
+    <!-- Left Section: Legal-Tech Illustration -->
+    <div class="auth-left">
+      <div class="auth-left-content">
+        <h1>Enterprise Contract Auditing</h1>
+        <p>Log in to access your contract intelligence workspace and perform secure, automated legal audits.</p>
+        
+        <div class="legal-tech-graphic">
+          <div style="font-weight: 600; font-size: 1rem; margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between;">
+            <span>WORKSPACE RISK PROFILE</span>
+            <span style="color: var(--success); font-size: 0.8rem;">98.4% COMPLIANT</span>
+          </div>
+          
+          <div class="mock-doc-row">
+            <div class="doc-tag">
+              <svg style="width:16px;height:16px;color:#EF4444" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+              <span>Exclusivity Period Clause</span>
+            </div>
+            <span class="doc-badge danger">CRITICAL</span>
+          </div>
+          
+          <div class="mock-doc-row">
+            <div class="doc-tag">
+              <svg style="width:16px;height:16px;color:#F59E0B" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+              <span>Indemnity Cap Cap-Limit</span>
+            </div>
+            <span class="doc-badge warning">WARNING</span>
+          </div>
+
+          <div class="mock-doc-row" style="border-bottom:none;">
+            <div class="doc-tag">
+              <svg style="width:16px;height:16px;color:#10B981" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              <span>Delaware Governing Law</span>
+            </div>
+            <span class="doc-badge success">APPROVED</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Section: Auth Card -->
+    <div class="auth-right">
+      <div class="auth-card">
+        <div class="auth-header">
+          <div class="logo-container">
+            <svg style="width:24px;height:24px" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+            <span>ExplainMe</span>
+          </div>
+          <h2>Sign in to ExplainMe</h2>
+          <p>Enter your email and password or continue with Google.</p>
+        </div>
+
+        <div class="alert alert-error" id="error-alert"></div>
+        <div class="alert alert-success" id="success-alert"></div>
+
+        <!-- Google Sign-In Button -->
+        <div class="social-buttons-grid">
+          <button class="social-btn" id="social-google-btn">
+            <svg viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.56-2.77c-.98.66-2.23 1.06-3.72 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/></svg>
+            <span>Continue with Google</span>
+          </button>
+        </div>
+
+        <div class="divider">or sign in with email</div>
+
+        <!-- Manual Email & Password Form -->
+        <form id="login-form">
+          <div class="form-group">
+            <label class="form-label" for="email">Email Address</label>
+            <input type="email" class="form-control" id="email" placeholder="name@company.com" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="password">Password</label>
+            <input type="password" class="form-control" id="password" placeholder="••••••••" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary" id="login-submit-btn" style="width:100%">
+            Sign In
+          </button>
+        </form>
+
+        <p style="margin-top: 2rem; text-align: center; font-size: 0.875rem; color: var(--text-secondary);">
+          Don't have an account? <a href="register.html" style="font-weight: 600;">Create Account</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- JS Scripts -->
+  <script src="js/auth.js"></script>
+  <script>
+    checkAuth(false);
+
+    const loginForm = document.getElementById('login-form');
+    const errorAlert = document.getElementById('error-alert');
+    const successAlert = document.getElementById('success-alert');
+
+    // Handle URL parameters for OAuth messages
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlError = urlParams.get('error');
+    const urlMessage = urlParams.get('message') || urlParams.get('success');
+    if (urlError) {
+      errorAlert.textContent = urlError;
+      errorAlert.style.display = 'block';
+    }
+    if (urlMessage) {
+      successAlert.textContent = urlMessage;
+      successAlert.style.display = 'block';
+    }
+
+    // Handle Manual Sign In
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorAlert.style.display = 'none';
+      successAlert.style.display = 'none';
+
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      try {
+        const response = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          successAlert.textContent = 'Sign in successful! Redirecting to workspace...';
+          successAlert.style.display = 'block';
+          if (data.token) {
+            localStorage.setItem('token', data.token);
+          }
+          setTimeout(() => {
+            window.location.href = '/dashboard.html';
+          }, 800);
+        } else {
+          errorAlert.textContent = data.error || 'Failed to sign in. Please check your credentials.';
+          errorAlert.style.display = 'block';
+        }
+      } catch (err) {
+        errorAlert.textContent = 'Connection error. Please check server status.';
+        errorAlert.style.display = 'block';
+      }
+    });
+
+    // Handle Google OAuth
+    document.getElementById('social-google-btn').addEventListener('click', () => {
+      window.location.href = '/api/auth/social/google';
+    });
+  </script>
+</body>
+</html>

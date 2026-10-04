@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload Contract - ExplainMe Workspace</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .progress-bar-container {
+      width: 100%;
+      height: 6px;
+      background-color: var(--border);
+      border-radius: 3px;
+      margin-top: 1.5rem;
+      overflow: hidden;
+      display: none;
+    }
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background-color: var(--primary);
+      transition: width 0.1s linear;
+    }
+    .status-text {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      margin-top: 0.5rem;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Left Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <svg style="width:22px;height:22px" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+        </svg>
+        <span>ExplainMe</span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+          <span>Dashboard</span>
+        </a>
+        <a href="upload-contract.html" class="nav-item active">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+          <span>Upload Contract</span>
+        </a>
+        <a href="analysis-report.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 2v-6m-9 9h12a2 2 0 002-2V9a2 2 0 00-2-2H6a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+          <span>Analysis Reports</span>
+        </a>
+        <a href="account-security.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+          <span>Account Security</span>
+        </a>
+        <a href="settings.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+          <span>Settings</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-avatar" id="user-avatar-initials">--</div>
+        <div class="user-info">
+          <span class="name" id="user-display-name">Loading...</span>
+          <span class="email" id="user-display-email">...</span>
+        </div>
+        <button onclick="logout()" style="background:none; border:none; margin-left:auto; color:var(--text-secondary); cursor:pointer;" title="Sign Out">
+          <svg style="width:18px;height:18px" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+          </svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Workspace Content -->
+    <div class="main-layout">
+      <!-- Top Navbar -->
+      <header class="top-navbar">
+        <div class="navbar-left">
+          <button class="menu-toggle-btn" id="menu-toggle">
+            <svg style="width:24px;height:24px" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+          <span style="font-weight: 600; color: var(--text-secondary);">Contract Upload</span>
+        </div>
+      </header>
+
+      <main class="content-area">
+        <div class="content-header">
+          <h1>Upload Legal Agreement</h1>
+          <p>Drag and drop a PDF, DOCX, TXT, PNG, JPG, or JPEG file containing your contract to perform automated compliance audit checks.</p>
+        </div>
+
+        <div class="card" style="max-width: 700px; margin: 0 auto;">
+          <div class="upload-zone" id="drop-zone">
+            <div class="upload-icon">
+              <svg style="width:48px;height:48px" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+              </svg>
+            </div>
+            <div class="upload-text" id="upload-status-title">Drag & drop your contract document here</div>
+            <div class="upload-subtext" id="upload-status-sub">Supports PDF, DOCX, TXT, PNG, JPG, JPEG up to 25MB</div>
+            
+            <input type="file" id="file-input" style="display: none;" accept=".pdf,.docx,.txt,.png,.jpg,.jpeg">
+
+            <!-- Progress tracker -->
+            <div class="progress-bar-container" id="prog-container">
+              <div class="progress-bar" id="prog-bar"></div>
+            </div>
+            <div class="status-text" id="status-percentage">Scanning clauses... 0%</div>
+          </div>
+
+          <div style="margin-top: 1.5rem; text-align: center;">
+            <button class="btn btn-outline" id="browse-btn" style="width:auto; padding: 0.6rem 1.5rem;">
+              Browse System Files
+            </button>
+            <a href="analysis-report.html" class="btn btn-primary" id="view-report-btn" style="width:auto; padding: 0.6rem 1.5rem; display:none; margin: 1rem auto 0; justify-content:center;">
+              View Compliance Audit Report
+            </a>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/auth.js"></script>
+  <script src="js/chatbot.js"></script>
+  <script>
+    checkAuth(true);
+
+    const dropZone = document.getElementById('drop-zone');
+    const fileInput = document.getElementById('file-input');
+    const browseBtn = document.getElementById('browse-btn');
+    const viewReportBtn = document.getElementById('view-report-btn');
+    
+    const statusTitle = document.getElementById('upload-status-title');
+    const statusSub = document.getElementById('upload-status-sub');
+    const progContainer = document.getElementById('prog-container');
+    const progBar = document.getElementById('prog-bar');
+    const pctText = document.getElementById('status-percentage');
+
+    browseBtn.addEventListener('click', () => {
+      fileInput.click();
+    });
+
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files.length > 0) {
+        performRealUpload(e.target.files[0]);
+      }
+    });
+
+    // Drag events
+    dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropZone.style.borderColor = 'var(--primary)';
+    });
+
+    dropZone.addEventListener('dragleave', () => {
+      dropZone.style.borderColor = 'var(--border)';
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.style.borderColor = 'var(--border)';
+      if (e.dataTransfer.files.length > 0) {
+        performRealUpload(e.dataTransfer.files[0]);
+      }
+    });
+
+    async function performRealUpload(file) {
+      browseBtn.style.display = 'none';
+      statusTitle.textContent = `Uploading "${file.name}"...`;
+      statusSub.style.display = 'none';
+      progContainer.style.display = 'block';
+      pctText.style.display = 'block';
+
+      // Animate progress smoothly up to 90%
+      let pct = 0;
+      const progressInterval = setInterval(() => {
+        if (pct < 90) {
+          pct += 5;
+          progBar.style.width = pct + '%';
+          pctText.textContent = `Processing and analyzing compliance... ${pct}%`;
+        }
+      }, 200);
+
+      const formData = new FormData();
+      formData.append('contract', file);
+
+      try {
+        const response = await fetch('/api/contract/upload', {
+          method: 'POST',
+          body: formData
+        });
+
+        clearInterval(progressInterval);
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Failed to upload contract.');
+        }
+
+        const result = await response.json();
+        
+        // Complete the bar to 100%
+        progBar.style.width = '100%';
+        pctText.textContent = '100% parsed. Audit results generated.';
+        statusTitle.textContent = 'Analysis Completed successfully';
+        progContainer.style.display = 'none';
+        
+        // Show view report button pointing to the correct ID
+        viewReportBtn.href = `analysis-report.html?id=${result.contractId}`;
+        viewReportBtn.style.display = 'inline-flex';
+      } catch (err) {
+        clearInterval(progressInterval);
+        statusTitle.textContent = 'Upload failed';
+        pctText.textContent = err.message || 'Connection error. Check console logs.';
+        progBar.style.width = '0%';
+        browseBtn.style.display = 'inline-block';
+        statusSub.style.display = 'block';
+      }
+    }
+  </script>
+</body>
+</html>

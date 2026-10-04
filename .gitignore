@@ -1,0 +1,32 @@
+# Environment variable files (NEVER commit secrets!)
+.env
+.env.local
+.env.*.local
+.env.production
+.env.development
+
+# Node dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Database & local data storage
+*.db
+*.db-journal
+*.sqlite
+explainme.db
+explainme_fallback.json
+
+# Operating System files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+scratch/

@@ -1,0 +1,36 @@
+{
+  "name": "explainme-auth-system",
+  "version": "1.0.0",
+  "description": "Enterprise-grade Multi-Authentication System & Legal-Tech Workspace",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "authentication",
+    "oauth",
+    "otp",
+    "jwt",
+    "legaltech",
+    "saas"
+  ],
+  "author": "ExplainMe Inc.",
+  "license": "ISC",
+  "dependencies": {
+    "adm-zip": "^0.5.17",
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mammoth": "^1.12.0",
+    "multer": "^2.1.1",
+    "nodemailer": "^10.0.14",
+    "pdf-parse": "^2.4.5",
+    "sqlite3": "^5.1.7",
+    "tesseract.js": "^7.0.0",
+    "useragent": "^2.3.0"
+  }
+}

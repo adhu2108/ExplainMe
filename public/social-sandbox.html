@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mock OAuth Sandbox - ExplainMe</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      background-color: #F1F5F9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 1rem;
+    }
+    .sandbox-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+    }
+    .provider-icon-large {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+    .provider-google { background-color: #F8FAFC; border: 1px solid var(--border); color: #EF4444; }
+    .provider-facebook { background-color: #EFF6FF; border: 1px solid var(--border); color: #1D4ED8; }
+    .provider-twitter { background-color: #0F172A; color: #FFFFFF; }
+  </style>
+</head>
+<body>
+  <div class="sandbox-card">
+    <div id="provider-badge" class="provider-icon-large">G</div>
+    
+    <div class="auth-header">
+      <h2 id="sandbox-title">Authorize Google Connection</h2>
+      <p id="sandbox-subtitle" style="margin-top: 0.5rem;">ExplainMe is requesting read access to your public profile and email address.</p>
+    </div>
+
+    <div class="alert alert-error" id="error-alert"></div>
+
+    <form id="sandbox-form" style="text-align: left;">
+      <div class="form-group">
+        <label class="form-label" for="mock-name">Full Name</label>
+        <input type="text" class="form-control" id="mock-name" value="Jane Doe" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="mock-email">Email Address</label>
+        <input type="email" class="form-control" id="mock-email" value="jane.doe@gmail.com" required>
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">
+        Approve & Authorize
+      </button>
+      <a href="login.html" id="cancel-link" class="btn btn-outline" style="margin-top: 0.75rem; width: 100%; display: flex;">
+        Cancel
+      </a>
+    </form>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const provider = urlParams.get('provider') || 'google';
+    const action = urlParams.get('action') || 'login';
+    const userId = urlParams.get('userId') || '';
+
+    // Initialize UI elements based on provider
+    const badge = document.getElementById('provider-badge');
+    const title = document.getElementById('sandbox-title');
+    const cancelLink = document.getElementById('cancel-link');
+
+    const providerCapitalized = provider.charAt(0).toUpperCase() + provider.slice(1);
+    title.textContent = action === 'connect' 
+      ? `Link ${providerCapitalized} Account` 
+      : `Sign In with ${providerCapitalized}`;
+
+    // Set correct icons & styles
+    if (provider === 'google') {
+      badge.textContent = 'G';
+      badge.className = 'provider-icon-large provider-google';
+      document.getElementById('mock-name').value = "Sarah Jenkins";
+      document.getElementById('mock-email').value = "sarah.jenkins@gmail.com";
+    } else if (provider === 'facebook') {
+      badge.textContent = 'f';
+      badge.className = 'provider-icon-large provider-facebook';
+      document.getElementById('mock-name').value = "Robert Chen";
+      document.getElementById('mock-email').value = "robert.chen@facebook.com";
+    } else if (provider === 'twitter') {
+      badge.textContent = '𝕏';
+      badge.className = 'provider-icon-large provider-twitter';
+      document.getElementById('mock-name').value = "Alex Sterling";
+      document.getElementById('mock-email').value = "alex.sterling@twitter.com";
+    }
+
+    if (action === 'connect') {
+      cancelLink.href = 'account-security.html';
+    } else {
+      cancelLink.href = 'login.html';
+    }
+
+    // Form Submission
+    document.getElementById('sandbox-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const errorAlert = document.getElementById('error-alert');
+      errorAlert.style.display = 'none';
+
+      const name = document.getElementById('mock-name').value.trim();
+      const email = document.getElementById('mock-email').value.trim();
+      const providerUserId = `${provider}_mock_${Math.floor(100000 + Math.random() * 900000)}`;
+
+      try {
+        const response = await fetch('/api/auth/social-callback', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            provider,
+            providerUserId,
+            name,
+            email,
+            action,
+            userId: userId || undefined
+          })
+        });
+
+        const data = await response.json();
+        
+        if (response.ok && data.success) {
+          if (action === 'connect') {
+            window.location.href = '/account-security.html?message=Account+linked+successfully';
+          } else {
+            window.location.href = '/dashboard.html';
+          }
+        } else {
+          errorAlert.textContent = data.error || 'Authorization failed. Please try again.';
+          errorAlert.style.display = 'block';
+        }
+      } catch (err) {
+        errorAlert.textContent = 'Connection error. Check backend server logs.';
+        errorAlert.style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>
