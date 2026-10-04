@@ -1,0 +1,9 @@
+{
+  "outputDirectory": "public",
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://explainme-backend.onrender.com/api/:path*"
+    }
+  ]
+}
