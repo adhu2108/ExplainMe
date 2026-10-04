@@ -9,7 +9,7 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "https://explainme-backend.onrender.com/api/$1"
+      "dest": "https://explainme.onrender.com/api/$1"
     },
     {
       "src": "/(.*)",
