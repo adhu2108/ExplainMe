@@ -134,7 +134,7 @@
                 <form onsubmit="event.preventDefault(); alert('Profile parameters updated.');">
                   <div class="form-group">
                     <label class="form-label">Full Name</label>
-                    <input type="text" class="form-control" id="profile-name" value="Sarah Jenkins">
+                    <input type="text" class="form-control" id="profile-name" value="">
                   </div>
                   <div class="form-group">
                     <label class="form-label">Registered Country</label>
@@ -182,17 +182,8 @@
                         <th>Status</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <td>Sarah Jenkins</td>
-                        <td>Workspace Administrator</td>
-                        <td><span class="badge-status success">Owner</span></td>
-                      </tr>
-                      <tr>
-                        <td>Robert Chen</td>
-                        <td>Legal Analyst</td>
-                        <td><span class="badge-status info">Member</span></td>
-                      </tr>
+                    <tbody id="team-members-tbody">
+                      <tr><td colspan="3" style="text-align:center; color:var(--text-secondary);">Loading members…</td></tr>
                     </tbody>
                   </table>
                 </div>
@@ -219,8 +210,27 @@
   <script>
     checkAuth(true).then(profile => {
       if (profile && profile.user) {
-        document.getElementById('profile-name').value = profile.user.name;
-        document.getElementById('profile-country').value = profile.user.country || 'United States';
+        const u = profile.user;
+        document.getElementById('profile-name').value = u.name || '';
+        document.getElementById('profile-country').value = u.country || 'United States';
+
+        // Build real Team Members table from the logged-in user
+        const tbody = document.getElementById('team-members-tbody');
+        tbody.innerHTML = `
+          <tr>
+            <td>${u.name || 'You'}</td>
+            <td>Workspace Owner</td>
+            <td><span class="badge-status success">Owner</span></td>
+          </tr>
+          <tr>
+            <td>${u.email || ''}</td>
+            <td>Primary Email</td>
+            <td><span class="badge-status info">Active</span></td>
+          </tr>
+        `;
+      } else {
+        document.getElementById('team-members-tbody').innerHTML =
+          '<tr><td colspan="3" style="text-align:center; color:var(--text-secondary);">No member data available.</td></tr>';
       }
     });
 

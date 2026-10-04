@@ -140,35 +140,8 @@
                   <th>Action</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td style="font-weight:600;">Mutual Non-Disclosure Agreement.pdf</td>
-                  <td>Jun 08, 2026</td>
-                  <td>Sarah Jenkins</td>
-                  <td><span class="badge-status success">Compliant</span></td>
-                  <td><a href="analysis-report.html" style="font-weight:600; font-size:0.85rem;">View Report</a></td>
-                </tr>
-                <tr>
-                  <td style="font-weight:600;">SaaS Enterprise Agreement_v2.docx</td>
-                  <td>Jun 05, 2026</td>
-                  <td>Robert Chen</td>
-                  <td><span class="badge-status failed">2 High Risks</span></td>
-                  <td><a href="analysis-report.html" style="font-weight:600; font-size:0.85rem;">View Report</a></td>
-                </tr>
-                <tr>
-                  <td style="font-weight:600;">Vendor Service Level Agreement.pdf</td>
-                  <td>May 28, 2026</td>
-                  <td>Alex Sterling</td>
-                  <td><span class="badge-status success">Compliant</span></td>
-                  <td><a href="analysis-report.html" style="font-weight:600; font-size:0.85rem;">View Report</a></td>
-                </tr>
-                <tr>
-                  <td style="font-weight:600;">Office Lease Agreement Draft.docx</td>
-                  <td>May 14, 2026</td>
-                  <td>Sarah Jenkins</td>
-                  <td><span class="badge-status info">Under Review</span></td>
-                  <td><a href="analysis-report.html" style="font-weight:600; font-size:0.85rem;">View Report</a></td>
-                </tr>
+              <tbody id="contracts-tbody">
+                <tr><td colspan="5" style="text-align:center; color:var(--text-secondary); padding:2rem;">Loading your contracts…</td></tr>
               </tbody>
             </table>
           </div>
@@ -269,8 +242,8 @@
       }
 
       // 2. Render Table Rows
-      const tbody = document.querySelector('.table tbody');
-      tbody.innerHTML = ''; // Clear hardcoded rows
+      const tbody = document.getElementById('contracts-tbody');
+      tbody.innerHTML = ''; // Clear placeholder
 
       reports.forEach(report => {
         const row = document.createElement('tr');
