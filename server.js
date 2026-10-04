@@ -210,6 +210,7 @@ app.get('/api/auth/social/:provider', (req, res) => {
       `client_id=${process.env.GOOGLE_CLIENT_ID}&` +
       `redirect_uri=${encodeURIComponent(redirectUri)}&` +
       `response_type=code&` +
+      `scope=openid%20email%20profile&` +
       `state=${state}`;
     return res.redirect(authUrl);
   }
