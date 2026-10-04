@@ -15,6 +15,7 @@ const nodemailer = require('nodemailer');
 const db = require('./database');
 
 const app = express();
+app.set('trust proxy', 1);
 const PORT = process.env.PORT || 3000;
 const JWT_SECRET = process.env.JWT_SECRET || 'explainme-secret-token-key-2026';
 const SESSION_TIMEOUT = parseInt(process.env.SESSION_TIMEOUT || '86400', 10);
@@ -203,7 +204,8 @@ app.get('/api/auth/social/:provider', (req, res) => {
   // If client ID is defined in .env, standard OAuth flow would proceed here.
   // Otherwise, we redirect to our Sandbox OAuth UI page for mock demonstration.
   if (provider === 'google' && process.env.GOOGLE_CLIENT_ID) {
-    const redirectUri = `${req.protocol}://${req.headers.host}/api/auth/social/google/callback`;
+    const protocol = req.headers['x-forwarded-proto'] || req.protocol || 'https';
+    const redirectUri = `${protocol}://${req.headers.host}/api/auth/social/google/callback`;
     const stateObj = { action: action || 'login', userId: userId || '' };
     const state = Buffer.from(JSON.stringify(stateObj)).toString('base64');
     const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?` +
@@ -242,7 +244,8 @@ app.get('/api/auth/social/google/callback', async (req, res) => {
   }
 
   try {
-    const redirectUri = `${req.protocol}://${req.headers.host}/api/auth/social/google/callback`;
+    const protocol = req.headers['x-forwarded-proto'] || req.protocol || 'https';
+    const redirectUri = `${protocol}://${req.headers.host}/api/auth/social/google/callback`;
 
     // Exchange authorization code for token
     const tokenResponse = await fetch('https://oauth2.googleapis.com/token', {
