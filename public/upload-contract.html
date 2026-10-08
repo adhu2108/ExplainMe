@@ -197,6 +197,7 @@
       try {
         const response = await fetch('/api/contract/upload', {
           method: 'POST',
+          credentials: 'include',
           body: formData
         });
 

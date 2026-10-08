@@ -19,9 +19,22 @@ app.set('trust proxy', 1);
 const PORT = process.env.PORT || 3000;
 const JWT_SECRET = process.env.JWT_SECRET || 'explainme-secret-token-key-2026';
 const SESSION_TIMEOUT = parseInt(process.env.SESSION_TIMEOUT || '86400', 10);
+const IS_PROD = process.env.NODE_ENV === 'production' || !!process.env.RENDER;
 
 // Middleware
-app.use(cors({ origin: true, credentials: true }));
+const allowedOrigins = [
+  'https://explainme.vercel.app',
+  'https://explain-me.vercel.app',
+  'http://localhost:3000',
+  'http://localhost:5000'
+];
+app.use(cors({
+  origin: (origin, cb) => {
+    if (!origin || allowedOrigins.some(o => origin.startsWith(o))) return cb(null, true);
+    return cb(null, true); // Allow all for now — tighten after domain is confirmed
+  },
+  credentials: true
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -110,8 +123,8 @@ app.post('/api/auth/register', async (req, res) => {
     res.cookie('token', token, {
       httpOnly: true,
       maxAge: SESSION_TIMEOUT * 1000,
-      secure: false,
-      sameSite: 'lax'
+      secure: IS_PROD,
+      sameSite: IS_PROD ? 'none' : 'lax'
     });
 
     res.json({
@@ -176,8 +189,8 @@ app.post('/api/auth/login', async (req, res) => {
     res.cookie('token', token, {
       httpOnly: true,
       maxAge: SESSION_TIMEOUT * 1000,
-      secure: false,
-      sameSite: 'lax'
+      secure: IS_PROD,
+      sameSite: IS_PROD ? 'none' : 'lax'
     });
 
     res.json({
@@ -372,8 +385,8 @@ app.get('/api/auth/social/google/callback', async (req, res) => {
       res.cookie('token', token, {
         httpOnly: true,
         maxAge: SESSION_TIMEOUT * 1000,
-        secure: false,
-        sameSite: 'lax'
+        secure: IS_PROD,
+        sameSite: IS_PROD ? 'none' : 'lax'
       });
 
       return res.redirect('/dashboard.html');
@@ -477,8 +490,8 @@ app.post('/api/auth/social-callback', async (req, res) => {
       res.cookie('token', token, {
         httpOnly: true,
         maxAge: SESSION_TIMEOUT * 1000,
-        secure: false,
-        sameSite: 'lax'
+        secure: IS_PROD,
+        sameSite: IS_PROD ? 'none' : 'lax'
       });
 
       res.json({

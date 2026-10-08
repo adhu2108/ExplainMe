@@ -3,7 +3,7 @@
 // Get user profile details
 async function fetchUserProfile() {
   try {
-    const res = await fetch('/api/user/profile');
+    const res = await fetch('/api/user/profile', { credentials: 'include' });
     if (!res.ok) {
       return null;
     }
@@ -47,7 +47,7 @@ async function checkAuth(requireAuth = true) {
 // Log out user
 async function logout() {
   try {
-    const res = await fetch('/api/auth/logout', { method: 'POST' });
+    const res = await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
     if (res.ok) {
       window.location.href = '/login.html';
     } else {
